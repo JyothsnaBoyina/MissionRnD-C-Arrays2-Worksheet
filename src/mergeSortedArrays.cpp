@@ -15,6 +15,7 @@ NOTES:
 */
 
 #include <iostream>
+#include<malloc.h>
 
 struct transaction {
 	int amount;
@@ -23,5 +24,82 @@ struct transaction {
 };
 
 struct transaction * mergeSortedArrays(struct transaction *A, int ALen, struct transaction *B, int BLen) {
-	return NULL;
+	struct transaction *temp;
+	temp = (struct transaction*)malloc((ALen+BLen)*sizeof(struct transaction));
+    int i=0,j=0,d=0,m=0,y=0,d1=0,m1=0,y1=0,k=0;
+
+	if (A == NULL || B == NULL)
+		return NULL;
+
+	for (k = 0;i<ALen&&j<BLen;k++)
+	{
+		d = 0;
+		m = 0;
+		y = 0;
+		d = d + (((A[i].date[0]) - '0') * 10);
+		d = d + ((A[i].date[1]) - '0');
+		m = m + (((A[i].date[3]) - '0') * 10);
+		m = m + ((A[i].date[4]) - '0');
+		y = y + (((A[i].date[6]) - '0') * 1000);
+		y = y + (((A[i].date[7]) - '0') * 100);
+		y = y + (((A[i].date[8]) - '0') * 10);
+		y = y + ((A[i].date[9]) - '0');
+
+		    d1 = 0;
+			m1 = 0;
+			y1 = 0;
+			d1 = d1 + (((B[j].date[0]) - '0') * 10);
+			d1 = d1 + ((B[j].date[1]) - '0');
+			m1 = m1 + (((B[j].date[3]) - '0') * 10);
+			m1 = m1 + ((B[j].date[4]) - '0');
+			y1 = y1 + (((B[j].date[6]) - '0') * 1000);
+			y1 = y1 + (((B[j].date[7]) - '0') * 100);
+			y1 = y1 + (((B[j].date[8]) - '0') * 10);
+			y1 = y1 + ((B[j].date[9]) - '0');
+
+			if (y < y1)
+			{
+				*(temp + k) = *(A + i);
+				i++;
+			}
+			else if (m<m1&&y == y1)
+			{
+				*(temp + k) = *(A + i);
+				i++;
+			}
+			else if (d<d1&&m == m1&&y == y1)
+			{
+				*(temp + k) = *(A + i);
+				i++;
+			}
+			else if (d == d1&&m == m1&&y == y1)
+			{
+				*(temp + k) = *(A + i);
+				k++;
+				*(temp + k) = *(B + j);
+				i++;
+				j++;
+			}
+			else
+			{
+				*(temp + k) = *(B + j);
+				j++;
+			}
+
+}
+	if (i<ALen)
+	for (; k < ALen + BLen; k++)
+	{
+		*(temp + k) = *(A + i);
+		i++;
+	}
+	else if (j<BLen)
+		for (; k < ALen + BLen; k++)
+		{
+			*(temp + k) = *(B + j);
+			j++;
+		}
+		
+
+	return temp;
 }

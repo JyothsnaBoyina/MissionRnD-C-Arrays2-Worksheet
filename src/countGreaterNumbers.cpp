@@ -21,5 +21,39 @@ struct transaction {
 };
 
 int countGreaterNumbers(struct transaction *Arr, int len, char *date) {
-	return -1;
+	int d=0, m=0, y=0,d1=0,m1=0,y1=0,i=0,count=0;
+	
+			d = d + ((*(date + 0) - '0')*10);
+			d = d + (*(date + 1) - '0');
+			m = m + ((*(date + 3) - '0') * 10);
+			m = m + (*(date + 4) - '0');
+			y = y + ((*(date + 6) - '0') * 1000);
+			y = y + ((*(date + 7) - '0') * 100);
+			y = y + ((*(date + 8) - '0') * 10);
+			y = y + ((*(date + 9) - '0') * 1);
+
+
+	for(i = 0; i < len; i++)
+	{
+		d1 = 0;
+		m1 = 0;
+		y1 = 0;
+		d1 = d1 + (((Arr[i].date[0]) - '0') * 10);
+		d1 = d1 + ((Arr[i].date[1]) - '0');
+		m1 = m1 + (((Arr[i].date[3]) - '0') * 10);
+		m1 = m1 + ((Arr[i].date[4])- '0');
+		y1 = y1 + (((Arr[i].date[6]) - '0') * 1000);
+		y1 = y1 + (((Arr[i].date[7]) - '0') * 100);
+		y1 = y1 + (((Arr[i].date[8]) - '0') * 10);
+		y1 = y1 + ((Arr[i].date[9]) - '0');
+
+		if (y1 > y)
+			count++;
+		else if (y1 == y&&m1 > m)
+			count++;
+		else if (y1 == y&&m1 == m&&d1 > d)
+			count++;
+	}
+	return count;
+
 }

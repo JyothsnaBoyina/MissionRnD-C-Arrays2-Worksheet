@@ -25,5 +25,57 @@ struct transaction {
 };
 
 struct transaction * sortedArraysCommonElements(struct transaction *A, int ALen, struct transaction *B, int BLen) {
-	return NULL;
+	struct transaction *temp;
+	temp = (struct transaction*)malloc(sizeof(struct transaction));
+	int i = 0, j = 0, d = 0, m = 0, y = 0, d1 = 0, m1 = 0, y1 = 0, k = 0;
+
+	if (A == NULL || B == NULL)
+		return NULL;
+
+	for (; i < ALen&&j < BLen;)
+	{
+		d = 0;
+		m = 0;
+		y = 0;
+		d = d + (((A[i].date[0]) - '0') * 10);
+		d = d + ((A[i].date[1]) - '0');
+		m = m + (((A[i].date[3]) - '0') * 10);
+		m = m + ((A[i].date[4]) - '0');
+		y = y + (((A[i].date[6]) - '0') * 1000);
+		y = y + (((A[i].date[7]) - '0') * 100);
+		y = y + (((A[i].date[8]) - '0') * 10);
+		y = y + ((A[i].date[9]) - '0');
+
+		d1 = 0;
+		m1 = 0;
+		y1 = 0;
+		d1 = d1 + (((B[j].date[0]) - '0') * 10);
+		d1 = d1 + ((B[j].date[1]) - '0');
+		m1 = m1 + (((B[j].date[3]) - '0') * 10);
+		m1 = m1 + ((B[j].date[4]) - '0');
+		y1 = y1 + (((B[j].date[6]) - '0') * 1000);
+		y1 = y1 + (((B[j].date[7]) - '0') * 100);
+		y1 = y1 + (((B[j].date[8]) - '0') * 10);
+		y1 = y1 + ((B[j].date[9]) - '0');
+
+		if (y<y1)
+			i++;
+		else if (m < m1&&y == y1)
+			i++;
+		else if (d < d1&&m == m1&&y == y1)
+			i++;
+		else if (d == d1&&m == m1&&y == y1)
+		{
+			*(temp + k) = *(A + i);
+			i++;
+			j++;
+			k++;
+		}
+		else
+			j++;
+	}
+	if (k>0)
+		return temp;
+	else
+		return NULL;
 }
